@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Soluções Nascimento"/>
-<link rel="manifest" href="manifest.json"/>
+<link rel="manifest" href="data:application/json,{%22name%22:%22Soluções Nascimento%22,%22short_name%22:%22Sol.Nascimento%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23070d1a%22,%22theme_color%22:%22%23070d1a%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230f2557'/%3E%3Ctext y='.9em' font-size='70' x='10'%3ESN%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22}]}"/>
 <title>Soluções Nascimento PREMIUM — IA Consultora</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -6393,7 +6393,7 @@ function pgProfessores(){
     ${isEscola?`<button class="btn btn-sm" onclick="profDetalheNome='${pu.name}';renderPage()">👁 Ver Detalhes</button>`:''}
     <button class="${pu.active?'btn-danger':'btn-success'}" style="font-size:11px" onclick="toggleUsuarioEmpresa(${pu.id})">${pu.active?'🔒 Bloquear':'🔓 Ativar'}</button>
     <button class="btn-ghost" style="font-size:11px" onclick="editarUsuarioEmpresa(${pu.id})">✏️</button>
-    <button class="btn-danger" style="font-size:11px" onclick="if(confirm('Remover professor?')){USERS=USERS.filter(x=>x.id!==${pu.id});EMPRESA_USERS=EMPRESA_USERS.filter(x=>x.id!==${pu.id});salvarUsuarios();renderPage();showToast('Professor removido.','warn');}">🗑</button>
+    <button class="btn-danger" style="font-size:11px" onclick="apagarUsuarioEmpresaModal('${pu.id}')">🗑</button>
     </div></div>`).join('')
   ):'');
 }
@@ -6993,54 +6993,6 @@ async function salvarTransacao(){
 }
 
 // ═══ GERENCIAR USUÁRIOS DA EMPRESA ═══
-// ── Seleção múltipla para excluir usuários ──────────────
-window._usuariosSelecionados=new Set();
-
-function _euToggleSel(id){
-  const s=window._usuariosSelecionados;
-  if(s.has(id)) s.delete(id); else s.add(id);
-  _euAtualizarUI();
-}
-function _euToggleTodos(ids){
-  const s=window._usuariosSelecionados;
-  const todos=ids.every(id=>s.has(id));
-  if(todos) ids.forEach(id=>s.delete(id));
-  else ids.forEach(id=>s.add(id));
-  _euAtualizarUI();
-}
-function _euAtualizarUI(){
-  const s=window._usuariosSelecionados;
-  const bar=document.getElementById('eu-bulk-bar');
-  const cnt=document.getElementById('eu-sel-count');
-  if(bar) bar.style.display=s.size>0?'flex':'none';
-  if(cnt) cnt.textContent=s.size+' selecionado'+(s.size>1?'s':'');
-  document.querySelectorAll('.eu-chk').forEach(el=>{
-    el.checked=s.has(Number(el.dataset.id));
-  });
-  const chkAll=document.getElementById('eu-chk-all');
-  if(chkAll){
-    const todos=[...document.querySelectorAll('.eu-chk')].map(el=>Number(el.dataset.id));
-    chkAll.checked=todos.length>0&&todos.every(id=>s.has(id));
-    chkAll.indeterminate=!chkAll.checked&&s.size>0;
-  }
-}
-function apagarSelecionados(){
-  const s=window._usuariosSelecionados;
-  if(s.size===0) return;
-  if(!confirm('Remover '+s.size+' usuário'+(s.size>1?'s':'')+' selecionado'+(s.size>1?'s':'')+' de uma vez? Esta ação não pode ser desfeita.')) return;
-  s.forEach(id=>{
-    const u=USERS.find(x=>String(x.id)===String(id));
-    const nome=u?u.name:'';
-    USERS=USERS.filter(x=>String(x.id)!==String(id));
-    EMPRESA_USERS=EMPRESA_USERS.filter(x=>String(x.id)!==String(id));
-    if(nome) ALUNOS_REAIS=ALUNOS_REAIS.filter(x=>x.nome!==nome&&x.name!==nome);
-  });
-  salvarUsuarios(); salvarDados();
-  showToast('🗑 '+s.size+' usuário'+(s.size>1?'s':'')+' removido'+(s.size>1?'s':'')+' com sucesso.','warn');
-  window._usuariosSelecionados=new Set();
-  renderPage();
-}
-
 function pgMeusUsuarios(){
   const u=currentUser;
   const minhaEmpresa=u.company||u.name||'';
@@ -7050,13 +7002,11 @@ function pgMeusUsuarios(){
   const roleC={professor:'blue',recepcionista:'purple',aluno:'gold',escola:'green'};
   const todos=[...USERS,...EMPRESA_USERS].filter(x=>(x.empresa_id===u.empresa_id||(x.company===minhaEmpresa&&x.id!==u.id))&&x.role!=='superadmin'&&x.role!=='acordes');
   let unicos=todos.filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i);
+  // Recepcionista só vê alunos (não pode ver/bloquear diretora ou professores)
   if(isRecep) unicos=unicos.filter(x=>x.role==='aluno');
-  // Limpa seleções que não existem mais
-  const idSet=new Set(unicos.map(x=>x.id));
-  window._usuariosSelecionados=new Set([...window._usuariosSelecionados].filter(id=>idSet.has(id)));
+  const alunosLista=unicos.filter(x=>x.role==='aluno');
   const pageTitle=isRecep?'Cadastrar Alunos':'Gerenciar Usuários';
   const pageDesc=isRecep?'Cadastre alunos manualmente ou importe planilha para gerar logins automáticos':'Gerencie professores, recepcionistas e alunos da escola';
-  const todosIds=unicos.map(x=>x.id);
   return`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
     <div>
       <div style="font-size:18px;font-weight:700;color:var(--text);font-family:'Playfair Display',serif">${pageTitle} — ${minhaEmpresa}</div>
@@ -7064,6 +7014,7 @@ function pgMeusUsuarios(){
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       ${isRecep||isEscola?`<button class="btn-ghost" onclick="modalImportarAlunosPlanilha()">📤 Importar Planilha</button>`:''}
+      ${!isRecep?`<button class="btn-danger" style="font-size:12px;padding:7px 14px" onclick="zerarTodosUsuarios()" title="Remove todos os usuários para poder reimportar do zero">🗑 Zerar Tudo</button>`:''}
       <button class="btn" onclick="modalNovoUsuarioEmpresa()">${isRecep?'+ Cadastrar Aluno':'+ Criar Usuário'}</button>
     </div>
   </div>`+
@@ -7076,21 +7027,8 @@ function pgMeusUsuarios(){
   (isRecep||isEscola?alertBox('blue','💡','Login automático via planilha',
     'Importe a planilha com os alunos e o sistema gera login e senha automaticamente. Ex: João Silva → login: joao123 · senha: joao123',
     `<button class="btn btn-sm" onclick="modalImportarAlunosPlanilha()">📤 Importar</button>`):'')+ 
-  `<div id="eu-bulk-bar" style="display:${window._usuariosSelecionados.size>0?'flex':'none'};align-items:center;gap:10px;padding:10px 16px;margin-bottom:10px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:12px;flex-wrap:wrap">
-    <span id="eu-sel-count" style="font-size:13px;font-weight:700;color:#f87171">${window._usuariosSelecionados.size} selecionado${window._usuariosSelecionados.size!==1?'s':''}</span>
-    <button class="btn-danger" style="font-size:12px;padding:7px 16px" onclick="apagarSelecionados()">🗑 Apagar Selecionados</button>
-    <button class="btn-ghost" style="font-size:12px" onclick="window._usuariosSelecionados=new Set();_euAtualizarUI()">✖ Limpar Seleção</button>
-  </div>`+
-  cardWrap('Usuários Cadastrados','',unicos.length>0?
-  `<div class="card-row" style="padding:9px 18px;background:var(--surface2)">
-    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--muted);font-weight:700;user-select:none">
-      <input type="checkbox" id="eu-chk-all" style="width:16px;height:16px;accent-color:var(--red);cursor:pointer" onchange="_euToggleTodos([${todosIds.join(',')}])"/>
-      Selecionar todos (${unicos.length})
-    </label>
-  </div>`+
-  unicos.map(eu=>`<div class="card-row" style="${window._usuariosSelecionados.has(eu.id)?'background:rgba(239,68,68,.05);':''}">
+  cardWrap('Usuários Cadastrados','',unicos.length>0?unicos.map(eu=>`<div class="card-row">
     <div style="display:flex;align-items:center;gap:12px">
-      <input type="checkbox" class="eu-chk" data-id="${eu.id}" style="width:16px;height:16px;accent-color:var(--red);cursor:pointer;flex-shrink:0" ${window._usuariosSelecionados.has(eu.id)?'checked':''} onchange="_euToggleSel(${eu.id})"/>
       <div style="width:38px;height:38px;border-radius:10px;background:rgba(201,168,76,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:12px">${eu.av||eu.name.charAt(0)}</div>
       <div>
         <div class="row-main">${eu.name}</div>
@@ -7105,8 +7043,7 @@ function pgMeusUsuarios(){
       ${!isRecep?`<button class="${eu.active?'btn-danger':'btn-success'}" style="font-size:11px" onclick="toggleUsuarioEmpresa(${eu.id})">${eu.active?'🔒 Bloquear':'🔓 Ativar'}</button>`:``}
       <button class="btn-danger" style="font-size:11px" onclick="apagarUsuarioEmpresa(${eu.id},'${eu.name}')">🗑</button>
     </div>
-  </div>`).join('')
-  :`<div style="padding:30px;text-align:center;color:var(--muted)">
+  </div>`).join(''):`<div style="padding:30px;text-align:center;color:var(--muted)">
     <div style="font-size:36px;margin-bottom:12px">👥</div>
     <div style="font-weight:600;color:var(--text);margin-bottom:6px">Nenhum usuário cadastrado ainda</div>
     <div style="font-size:12.5px;margin-bottom:16px">Use "${isRecep?'Cadastrar Aluno':'Criar Usuário'}" ou importe uma planilha de alunos.</div>
@@ -7231,7 +7168,7 @@ function editarUsuarioEmpresa(id){
     <div class="field"><label>Nova Senha <span style="color:var(--muted);font-size:11px">(deixe em branco para manter)</span></label><input id="eu-pass" type="password" placeholder="Mínimo 4 caracteres"/></div>
     <div style="display:flex;gap:10px;margin-top:6px">
       <button class="btn" style="flex:1" onclick="salvarEdicaoUsuarioEmpresa('${id}')">💾 Salvar</button>
-      <button class="btn-danger" onclick="if(confirm('Remover este ${isProf?'professor':'usuário'}?')){USERS=USERS.filter(x=>String(x.id)!=='${id}');EMPRESA_USERS=EMPRESA_USERS.filter(x=>String(x.id)!=='${id}');salvarUsuarios();closeModal();renderPage();showToast('Removido.','warn');}">🗑 Remover</button>
+      <button class="btn-danger" onclick="apagarUsuarioEmpresaModal('${id}')">🗑 Remover</button>
       <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
     </div>`,460);
 }
@@ -7423,7 +7360,6 @@ function apagarUsuarioEmpresa(id, nome){
   EMPRESA_USERS=EMPRESA_USERS.filter(x=>String(x.id)!==String(id));
   // Remove also from ALUNOS_REAIS if exists
   ALUNOS_REAIS=ALUNOS_REAIS.filter(x=>x.nome!==nome&&x.name!==nome);
-  window._usuariosSelecionados.delete(id);
   salvarUsuarios(); salvarDados(); renderPage();
   showToast('Usuario "'+nome+'" removido.','warn');
 }
@@ -7432,6 +7368,37 @@ function toggleUsuarioEmpresa(id){
   [USERS,EMPRESA_USERS].forEach(arr=>{const x=arr.find(u=>String(u.id)===String(id));if(x)x.active=!x.active;});
   salvarUsuarios(); renderPage();
 }
+
+// ── Apagar via modal (botão Remover) ────────────────────
+function apagarUsuarioEmpresaModal(id){
+  const u=[...USERS,...EMPRESA_USERS].find(x=>String(x.id)===String(id));
+  if(!u){alert('Usuário não encontrado.');return;}
+  if(!confirm('Remover "'+u.name+'"? Esta ação não pode ser desfeita.'))return;
+  USERS=USERS.filter(x=>String(x.id)!==String(id));
+  EMPRESA_USERS=EMPRESA_USERS.filter(x=>String(x.id)!==String(id));
+  ALUNOS_REAIS=ALUNOS_REAIS.filter(x=>x.nome!==u.name&&x.name!==u.name);
+  window._usuariosSelecionados&&window._usuariosSelecionados.delete(id);
+  salvarUsuarios(); salvarDados();
+  try{closeModal();}catch(e){}
+  renderPage();
+  showToast('"'+u.name+'" removido.','warn');
+}
+
+// ── Zerar todos os usuários da empresa (exceto o próprio dono) ──
+function zerarTodosUsuarios(){
+  const u=currentUser;
+  const empresa=u.company||u.name||'';
+  const qtd=USERS.filter(x=>x.id!==u.id&&(x.empresa_id===u.empresa_id||(x.company===empresa&&x.role!=='superadmin'&&x.role!=='acordes'))).length;
+  if(qtd===0){showToast('Não há usuários para remover.','warn');return;}
+  if(!confirm('⚠️ Isso vai REMOVER os '+qtd+' usuários desta escola (professores, recepcionistas e alunos). O seu acesso de diretora NÃO será afetado. Confirma?'))return;
+  USERS=USERS.filter(x=>x.id===u.id||x.role==='superadmin'||x.role==='acordes'||(x.empresa_id!==u.empresa_id&&x.company!==empresa));
+  EMPRESA_USERS=EMPRESA_USERS.filter(x=>x.id===u.id);
+  ALUNOS_REAIS=[];
+  window._usuariosSelecionados=new Set();
+  salvarUsuarios(); salvarDados(); renderPage();
+  showToast('✅ Todos os usuários foram removidos. Pode importar a planilha novamente.','green');
+}
+
 
 // ═══ NOTIFICAÇÕES INTERNAS ═══
 function getAlertas(){
