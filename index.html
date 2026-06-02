@@ -319,6 +319,26 @@ body.light{
       Use o e-mail e senha que você cadastrou acima para entrar.
     </div>
 
+    <!-- BANNER PWA INSTALAR -->
+    <div id="pwa-banner" style="display:none;margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,rgba(26,86,219,.15),rgba(201,168,76,.08));border:1px solid rgba(201,168,76,.3);border-radius:14px;cursor:pointer;transition:all .2s" onclick="instalarPWA()" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,.3)'">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#0f2557,#1a56db);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1.5px solid rgba(201,168,76,.3)">📲</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--gold-l);margin-bottom:2px">Instalar como App</div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.4">Adicione à tela inicial — acesso rápido, funciona offline</div>
+        </div>
+        <div style="font-size:11px;font-weight:700;color:var(--gold);padding:5px 12px;border-radius:20px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);white-space:nowrap">Instalar ↓</div>
+      </div>
+    </div>
+
+    <!-- INSTRUÇÃO iOS (Safari) -->
+    <div id="pwa-ios-hint" style="display:none;margin-top:16px;padding:13px 16px;background:rgba(26,86,219,.08);border:1px solid rgba(26,86,219,.2);border-radius:14px">
+      <div style="font-size:12.5px;color:var(--muted);line-height:1.7">
+        <strong style="color:#60a5fa">📱 Instalar no iPhone/iPad:</strong><br>
+        Toque em <strong style="color:var(--text)">Compartilhar</strong> (ícone ↑) → <strong style="color:var(--text)">"Adicionar à Tela de Início"</strong>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -414,27 +434,27 @@ let RETENCAO_REAL = [
 const PROF_DATA = {
   'Janeiro':[
     {nome:'CAMILA',   ativos:29, novos:4, cancelamentos:2, total:31, receita:4272.77, imposto:256.37, pagamento:2503.00, liquidoAcordes:1513.40},
-    {nome:'ELINETE',  ativos:5,  novos:2, cancelamentos:0, total:7,  receita:610.00,  imposto:36.60,  pagamento:0,       liquidoAcordes:0},
-    {nome:'FERNANDA', ativos:17, novos:1, cancelamentos:5, total:13, receita:2622.22, imposto:157.33, pagamento:0,       liquidoAcordes:0},
-    {nome:'KAREN',    ativos:28, novos:3, cancelamentos:2, total:29, receita:4543.45, imposto:272.61, pagamento:0,       liquidoAcordes:0},
-    {nome:'OSÉIAS',   ativos:42, novos:4, cancelamentos:2, total:44, receita:6789.04, imposto:407.34, pagamento:0,       liquidoAcordes:0},
+    {nome:'ELINETE',  ativos:5,  novos:2, cancelamentos:0, total:7,  receita:610.00,  imposto:36.60,  pagamento:0,       liquidoAcordes:573.40},
+    {nome:'FERNANDA', ativos:17, novos:1, cancelamentos:5, total:13, receita:2622.22, imposto:157.33, pagamento:0,       liquidoAcordes:2464.89},
+    {nome:'KAREN',    ativos:28, novos:3, cancelamentos:2, total:29, receita:4543.45, imposto:272.61, pagamento:0,       liquidoAcordes:4270.84},
+    {nome:'OSÉIAS',   ativos:42, novos:4, cancelamentos:2, total:44, receita:6789.04, imposto:407.34, pagamento:0,       liquidoAcordes:6381.70},
     {nome:'TANIA',    ativos:27, novos:2, cancelamentos:0, total:29, receita:4906.89, imposto:294.41, pagamento:2503.00, liquidoAcordes:2109.48},
   ],
   'Fevereiro':[
     {nome:'CAMILA',   ativos:31, novos:0, cancelamentos:3, total:28, receita:4335.76, imposto:260.15, pagamento:2503.00, liquidoAcordes:1572.61},
-    {nome:'ELINETE',  ativos:7,  novos:1, cancelamentos:1, total:7,  receita:1199.78, imposto:71.99,  pagamento:525.00,  liquidoAcordes:501.99},
-    {nome:'FERNANDA', ativos:13, novos:1, cancelamentos:2, total:12, receita:2046.59, imposto:122.80, pagamento:818.75,  liquidoAcordes:1039.04},
-    {nome:'KAREN',    ativos:29, novos:4, cancelamentos:0, total:33, receita:4764.77, imposto:285.89, pagamento:2010.50, liquidoAcordes:1964.38},
-    {nome:'ARTHUR',   ativos:1,  novos:3, cancelamentos:0, total:4,  receita:340.00,  imposto:20.40,  pagamento:96.25,   liquidoAcordes:122.55},
+    {nome:'ELINETE',  ativos:7,  novos:1, cancelamentos:1, total:7,  receita:1199.78, imposto:71.99,  pagamento:525.00,  liquidoAcordes:602.79},
+    {nome:'FERNANDA', ativos:13, novos:1, cancelamentos:2, total:12, receita:2046.59, imposto:122.80, pagamento:818.75,  liquidoAcordes:1105.04},
+    {nome:'KAREN',    ativos:29, novos:4, cancelamentos:0, total:33, receita:4764.77, imposto:285.89, pagamento:2010.50, liquidoAcordes:2468.38},
+    {nome:'ARTHUR',   ativos:1,  novos:3, cancelamentos:0, total:4,  receita:340.00,  imposto:20.40,  pagamento:96.25,   liquidoAcordes:223.35},
     {nome:'OSÉIAS',   ativos:44, novos:2, cancelamentos:0, total:46, receita:7164.48, imposto:429.87, pagamento:3425.75, liquidoAcordes:3308.86},
     {nome:'TANIA',    ativos:29, novos:1, cancelamentos:1, total:29, receita:4634.89, imposto:278.09, pagamento:2503.00, liquidoAcordes:1853.80},
   ],
   'Março':[
     {nome:'CAMILA',   ativos:28, novos:0, cancelamentos:0, total:28, receita:4072.98, imposto:244.38, pagamento:2503.00, liquidoAcordes:1325.60},
-    {nome:'ELINETE',  ativos:7,  novos:0, cancelamentos:0, total:7,  receita:868.29,  imposto:52.10,  pagamento:577.25,  liquidoAcordes:150.74},
+    {nome:'ELINETE',  ativos:7,  novos:0, cancelamentos:0, total:7,  receita:868.29,  imposto:52.10,  pagamento:577.25,  liquidoAcordes:238.94},
     {nome:'FERNANDA', ativos:12, novos:2, cancelamentos:1, total:13, receita:1877.35, imposto:112.64, pagamento:961.75,  liquidoAcordes:802.96},
-    {nome:'KAREN',    ativos:33, novos:3, cancelamentos:1, total:35, receita:5011.33, imposto:300.68, pagamento:2258.00, liquidoAcordes:1999.05},
-    {nome:'ARTHUR',   ativos:4,  novos:4, cancelamentos:0, total:8,  receita:1020.00, imposto:61.20,  pagamento:374.75,  liquidoAcordes:495.85},
+    {nome:'KAREN',    ativos:33, novos:3, cancelamentos:1, total:35, receita:5011.33, imposto:300.68, pagamento:2258.00, liquidoAcordes:2452.65},
+    {nome:'ARTHUR',   ativos:4,  novos:4, cancelamentos:0, total:8,  receita:1020.00, imposto:61.20,  pagamento:374.75,  liquidoAcordes:584.05},
     {nome:'OSÉIAS',   ativos:46, novos:3, cancelamentos:2, total:47, receita:7048.69, imposto:422.92, pagamento:3328.00, liquidoAcordes:3297.77},
     {nome:'TANIA',    ativos:29, novos:1, cancelamentos:1, total:29, receita:4065.60, imposto:243.94, pagamento:2503.00, liquidoAcordes:1318.66},
   ],
@@ -1597,41 +1617,67 @@ function pgFinanceiro(){
          ${alertBox('blue','💡','Sobre este DRE','Os valores são calculados a partir dos seus lançamentos reais. Para um DRE mais detalhado, categorize bem suas transações ao lançar.')}`;
 
   }else if(finTab==='fluxo'){
-    // Fluxo dinâmico baseado nas transações reais + parcelamentos + boletos
-    const trCli=porCliente(TRANSACOES);
+    // ── CORREÇÃO 1: usa filtrarPorMes para respeitar o mês/ano selecionado
+    // Quando mesSel='todos' mostra todos; caso contrário filtra pelo período
+    const ms=getMesSel();
+    const trCli = ms==='todos' ? porCliente(TRANSACOES) : filtrarPorMes(porCliente(TRANSACOES));
     const hoje=new Date();
     // Agrupa transações por mês
     const mesesFluxo={};
     trCli.forEach(t=>{
+      // ── CORREÇÃO 2: transações sem data ficam em balde próprio "sem-data" (não mistura com parcelas futuras)
       const m=t.data?t.data.slice(0,7):'sem-data';
-      if(!mesesFluxo[m]) mesesFluxo[m]={mes:m,entrada:0,saida:0};
+      if(!mesesFluxo[m]) mesesFluxo[m]={mes:m,entrada:0,saida:0,isFuturo:false,isSemData:m==='sem-data'};
       if(t.tipo==='entrada') mesesFluxo[m].entrada+=Number(t.valor);
       else mesesFluxo[m].saida+=Number(t.valor);
     });
-    // Adiciona parcelas abertas como saídas futuras
-    porCliente(PARCELAMENTOS).forEach(p=>p.parcelas.filter(x=>x.status==='aberto').forEach(x=>{
+    // Parcelas abertas — somente do período selecionado (ou todas se 'todos')
+    porCliente(PARCELAMENTOS).forEach(p=>p.parcelas.filter(x=>{
+      if(x.status!=='aberto') return false;
+      if(ms==='todos') return true;
+      return x.data && x.data.startsWith(ms);
+    }).forEach(x=>{
+      // ── CORREÇÃO 2: parcelas sem data vão para 'futuro', não misturado com 'sem-data'
       const m=x.data?x.data.slice(0,7):'futuro';
-      if(!mesesFluxo[m]) mesesFluxo[m]={mes:m,entrada:0,saida:0};
+      if(!mesesFluxo[m]) mesesFluxo[m]={mes:m,entrada:0,saida:0,isFuturo:m==='futuro',isSemData:false};
       if(p.tipo==='saida') mesesFluxo[m].saida+=Number(x.valor);
       else mesesFluxo[m].entrada+=Number(x.valor);
     }));
-    // Adiciona boletos em aberto como entradas futuras
-    porCliente(BOLETOS).filter(b=>b.status==='aberto'||b.status==='vencido').forEach(b=>{
+    // ── CORREÇÃO 3: boletos VENCIDOS são inadimplência — NÃO entram como entrada
+    // Apenas boletos com status 'aberto' (ainda podem ser pagos) entram como entrada prevista
+    porCliente(BOLETOS).filter(b=>{
+      if(b.status!=='aberto') return false; // vencido e pago ficam fora
+      if(ms==='todos') return true;
+      return b.venc && b.venc.startsWith(ms);
+    }).forEach(b=>{
       const m=b.venc?b.venc.slice(0,7):'futuro';
-      if(!mesesFluxo[m]) mesesFluxo[m]={mes:m,entrada:0,saida:0};
+      if(!mesesFluxo[m]) mesesFluxo[m]={mes:m,entrada:0,saida:0,isFuturo:m==='futuro',isSemData:false};
       mesesFluxo[m].entrada+=Number(b.valor);
     });
-    const linhas=Object.values(mesesFluxo).sort((a,b)=>a.mes.localeCompare(b.mes));
+    // Boletos vencidos somam como inadimplência (exibidos separadamente no resumo)
+    const totalInadimpl=porCliente(BOLETOS).filter(b=>b.status==='vencido').reduce((a,b)=>a+Number(b.valor),0);
+    const qtdInadimpl=porCliente(BOLETOS).filter(b=>b.status==='vencido').length;
+
+    const linhas=Object.values(mesesFluxo).sort((a,b)=>{
+      // sem-data e futuro sempre por último
+      if(a.isSemData||a.isFuturo) return 1;
+      if(b.isSemData||b.isFuturo) return -1;
+      return a.mes.localeCompare(b.mes);
+    });
     const maxVal=Math.max(...linhas.map(l=>Math.max(l.entrada,l.saida)),1);
     let saldoAcum=0;
     const linhasHTML=linhas.map(l=>{
       const sal=l.entrada-l.saida; saldoAcum+=sal;
-      return`<div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+      const labelMes=l.isSemData?'⚠️ Sem data':l.isFuturo?'🔮 Futuro / Sem data':l.mes;
+      const isFut=l.isFuturo||l.isSemData;
+      return`<div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);${isFut?'opacity:.75':''}">
         <div style="display:flex;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px">
-          <span style="font-size:13px;font-weight:700;color:var(--text)">${l.mes==='futuro'?'Futuro / Sem data':l.mes}</span>
+          <span style="font-size:13px;font-weight:700;color:${isFut?'var(--muted)':'var(--text)'}">
+            ${labelMes}${isFut?` <span style="font-size:10px;font-weight:400;color:var(--muted)">(previsão)</span>`:''}
+          </span>
           <div style="display:flex;gap:10px">
-            <span style="font-size:12px;font-weight:700;color:${sal>=0?'var(--green)':'var(--red)'}">Saldo mês: R$ ${sal.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>
-            <span style="font-size:12px;color:var(--muted)">Acumulado: <strong style="color:${saldoAcum>=0?'var(--gold)':'var(--red)'}">R$ ${saldoAcum.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></span>
+            <span style="font-size:12px;font-weight:700;color:${sal>=0?'var(--green)':'var(--red)'}">Saldo: R$ ${sal.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>
+            ${!isFut?`<span style="font-size:12px;color:var(--muted)">Acumulado: <strong style="color:${saldoAcum>=0?'var(--gold)':'var(--red)'}">R$ ${saldoAcum.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></span>`:''}
           </div>
         </div>
         <div style="display:flex;gap:8px;align-items:flex-end;height:40px;margin-bottom:6px">
@@ -1650,7 +1696,15 @@ function pgFinanceiro(){
         </div>
       </div>`;
     }).join('');
-    content=`<div class="card"><div class="card-header"><span class="card-title">Fluxo de Caixa — Dados Reais</span><div style="display:flex;gap:8px;align-items:center"><span style="font-size:11.5px;color:var(--muted)">Transações + Parcelas + Boletos</span><button class="btn-ghost" style="font-size:11px" onclick="imprimirRelatorio('fluxo')">Imprimir</button></div></div><div style="padding:16px 20px">${linhas.length>0?linhasHTML:`<div style="text-align:center;padding:30px;color:var(--muted)"><div style="font-size:36px;margin-bottom:10px">📊</div>Importe uma planilha ou lance transações para ver o fluxo de caixa real.</div>`}</div></div>`;
+    // Aviso inadimplência se houver
+    const inadimplHTML=qtdInadimpl>0
+      ?`<div style="margin:0 0 14px;padding:11px 16px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;font-size:12.5px;color:#f87171;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+          <span>🚨 <strong>${qtdInadimpl} boleto(s) vencido(s)</strong> não entram no fluxo pois são inadimplência</span>
+          <span style="font-weight:700">R$ ${totalInadimpl.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>
+        </div>`
+      :'';
+    const periodoLabel=ms==='todos'?'Todos os períodos':`Período: ${ms}`;
+    content=`<div class="card"><div class="card-header"><span class="card-title">Fluxo de Caixa — Dados Reais</span><div style="display:flex;gap:8px;align-items:center"><span style="font-size:11.5px;color:var(--muted)">${periodoLabel}</span><button class="btn-ghost" style="font-size:11px" onclick="imprimirRelatorio('fluxo')">Imprimir</button></div></div><div style="padding:16px 20px">${inadimplHTML}${linhas.length>0?linhasHTML:`<div style="text-align:center;padding:30px;color:var(--muted)"><div style="font-size:36px;margin-bottom:10px">📊</div>Importe uma planilha ou lance transações para ver o fluxo de caixa real.</div>`}</div></div>`;
   }else if(finTab==='impostos'){
     content=pgImpostos();
   }else if(finTab==='estoque'){
@@ -2721,7 +2775,6 @@ async function processFileUniversal(file){
 
 async function analisarEImportarComIA(rows, sheetName){
   if(!rows||rows.length<2) return 0;
-  // Sem IA para não-superadmin — usa detecção automática
   if(!isSuperAdmin()||!getOpenAIKey()) return detectAndImportRows(rows, sheetName);
   const amostra=rows.slice(0,21).map(r=>r.map(c=>String(c||'').trim()).join(' | ')).join('\n');
   const prompt=`Analise esta aba de planilha chamada "${sheetName}" e retorne SOMENTE JSON válido sem texto extra.
@@ -2729,17 +2782,54 @@ async function analisarEImportarComIA(rows, sheetName){
 DADOS (cabeçalho + até 20 linhas):
 ${amostra}
 
-Retorne exatamente:
-{"tipo":"financeiro"|"alunos"|"professores"|"retencao"|"ignorar","subtipo":"entradas"|"saidas"|"misto"|null,"col_desc":<int>,"col_valor":<int>,"col_tipo":<int>,"col_data":<int>,"col_cat":<int>,"col_instrumento":<int>,"col_professor":<int>,"tipo_padrao":"entrada"|"saida","motivo":"<texto curto>"}
+Retorne exatamente este JSON:
+{
+  "tipo":"financeiro"|"alunos"|"professores"|"retencao"|"ignorar",
+  "subtipo":"entradas"|"saidas"|"misto"|null,
+  "col_desc":<int>,
+  "col_valor":<int>,
+  "col_tipo":<int>,
+  "col_data":<int>,
+  "col_cat":<int>,
+  "col_instrumento":<int>,
+  "col_professor":<int>,
+  "col_cpf":<int>,
+  "col_telefone":<int>,
+  "col_email":<int>,
+  "col_nascimento":<int>,
+  "col_endereco":<int>,
+  "col_cidade":<int>,
+  "col_cep":<int>,
+  "col_responsavel":<int>,
+  "col_tel_responsavel":<int>,
+  "col_inicio":<int>,
+  "col_obs":<int>,
+  "tipo_padrao":"entrada"|"saida",
+  "motivo":"<explicação curta>"
+}
 
-Regras: col_* são índices 0-based, -1 se não existir. tipo=ignorar para abas de config/totais/irrelevantes. tipo_padrao é o padrão das linhas quando não há coluna de tipo.`;
+Regras:
+- col_* são índices 0-based, -1 se não existir
+- tipo=ignorar para abas de config/totais/irrelevantes
+- tipo=alunos quando tem nomes de pessoas + instrumento/curso OU mensalidade
+- col_cpf: coluna com CPF (pode ser "CPF", "Documento", "Doc")
+- col_telefone: coluna com telefone/celular do aluno
+- col_email: coluna com e-mail
+- col_nascimento: data de nascimento (pode ser "Nasc", "Nascimento", "Data Nasc")
+- col_endereco: endereço/rua
+- col_cidade: cidade
+- col_cep: CEP
+- col_responsavel: nome do responsável/pai/mãe
+- col_tel_responsavel: telefone do responsável
+- col_inicio: data de início/matrícula
+- col_obs: observações/notas`;
 
   let analise;
   try{
     const resp=await fetch('https://api.openai.com/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+getOpenAIKey()},
-      body:JSON.stringify({model:'gpt-4o-mini',max_tokens:300,temperature:0,messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'gpt-4o-mini',max_tokens:500,temperature:0,messages:[{role:'user',content:prompt}]})
     });
     const data=await resp.json();
     if(!resp.ok) throw new Error(data.error?.message||'Erro OpenAI '+resp.status);
@@ -2781,16 +2871,45 @@ function importarFinanceiroUniversalIA(rows,analise){
   return importados;
 }
 
-function importarAlunosUniversalIA(rows,analise){
-  let importados=0;
+function importarAlunosUniversalIA(rows, analise){
+  let importados=0, atualizados=0;
+  const g=(row,col)=>col>=0?String(row[col]||'').trim():'';
   rows.slice(1).forEach(row=>{
-    const nome=analise.col_desc>=0?String(row[analise.col_desc]||'').trim():'';
+    const nome=g(row,analise.col_desc);
     if(!nome||nome.length<2) return;
-    ALUNOS_REAIS.push({id:Date.now()+importados+Math.random(),nome,instrumento:analise.col_instrumento>=0?String(row[analise.col_instrumento]||'').trim():'',professor:analise.col_professor>=0?String(row[analise.col_professor]||'').trim():'',valor:analise.col_valor>=0?parseValor(row[analise.col_valor])||0:0,ativo:true,importado:true});
-    importados++;
+    // Verifica se aluno já existe — atualiza em vez de duplicar
+    const existente=ALUNOS_REAIS.find(a=>(a.nome||a.name||'').toLowerCase()===nome.toLowerCase());
+    const dados={
+      nome, name: nome,
+      instrumento:   g(row,analise.col_instrumento),
+      professor:     g(row,analise.col_professor),
+      valor:         analise.col_valor>=0?parseValor(row[analise.col_valor])||0:0,
+      cpf:           g(row,analise.col_cpf),
+      telefone:      g(row,analise.col_telefone),
+      email:         g(row,analise.col_email),
+      nascimento:    analise.col_nascimento>=0?parseData(row[analise.col_nascimento]):'',
+      endereco:      g(row,analise.col_endereco),
+      cidade:        g(row,analise.col_cidade),
+      cep:           g(row,analise.col_cep),
+      responsavel:   g(row,analise.col_responsavel),
+      telResponsavel:g(row,analise.col_tel_responsavel),
+      dataInicio:    analise.col_inicio>=0?parseData(row[analise.col_inicio]):'',
+      obs:           g(row,analise.col_obs),
+      active: true,
+      importado: true
+    };
+    // Remove campos vazios para não sobrescrever dados existentes com vazio
+    Object.keys(dados).forEach(k=>{ if(dados[k]===''&&k!=='nome'&&k!=='name') delete dados[k]; });
+    if(existente){
+      Object.assign(existente, dados);
+      atualizados++;
+    } else {
+      ALUNOS_REAIS.push({id:Date.now()+importados+Math.random(),...dados});
+      importados++;
+    }
   });
-  IMPORT_LOG.push({tipo:'ok',msg:`🎓 ${importados} alunos importados`});
-  return importados;
+  IMPORT_LOG.push({tipo:'ok',msg:`🎓 ${importados} alunos importados${atualizados>0?`, ${atualizados} atualizados`:''}`});
+  return importados+atualizados;
 }
 
 // Fallback por palavras-chave (sem IA)
@@ -3974,63 +4093,138 @@ function apagarAluno(nome){
 }
 
 function editarAlunoReal(nome){
-  const a=ALUNOS_REAIS.find(x=>(x.nome||x.name)===nome);if(!a)return;
-  openModal('Editar Aluno',
-    '<div class="field"><label>Nome</label><input id="ea-nome" value="'+( a.nome||a.name||'' )+'"/></div>'+
-    '<div class="field"><label>Instrumento/Curso</label><input id="ea-instr" value="'+(a.instrumento||'')+'"/></div>'+
-    '<div class="field"><label>Professor</label><input id="ea-prof" value="'+(a.professor||'')+'"/></div>'+
-    '<div class="field"><label>Mensalidade (R$)</label><input id="ea-valor" type="number" step="0.01" value="'+(a.valor||0)+'"/></div>'+
-    '<div style="display:flex;gap:10px;margin-top:4px">'+
-    '<button class="btn" style="flex:1" onclick="salvarEdicaoAlunoReal(\''+nome+'\')">Salvar</button>'+
-    '<button class="btn-danger" onclick="apagarAluno(\''+nome+'\');closeModal()">Apagar</button>'+
-    '<button class="btn-ghost" onclick="closeModal()">Cancelar</button></div>',460);
+  const a=ALUNOS_REAIS.find(x=>(x.nome||x.name)===nome); if(!a) return;
+  openModal('✏️ Editar Aluno',
+    `<div class="field"><label>Nome Completo *</label><input id="ea-nome" value="${a.nome||a.name||''}"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>CPF</label><input id="ea-cpf" value="${a.cpf||''}" placeholder="000.000.000-00" maxlength="14"/></div>
+      <div class="field"><label>Telefone</label><input id="ea-tel" value="${a.telefone||''}" placeholder="(00) 00000-0000" maxlength="15"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Curso / Instrumento *</label><input id="ea-instr" value="${a.instrumento||''}"/></div>
+      <div class="field"><label>Professor</label><input id="ea-prof" value="${a.professor||''}"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Mensalidade (R$)</label><input id="ea-valor" type="number" step="0.01" value="${a.valor||0}"/></div>
+      <div class="field"><label>Data de Início</label><input id="ea-inicio" type="date" value="${a.dataInicio||''}"/></div>
+    </div>
+    <div class="field"><label>Endereço</label><input id="ea-end" value="${a.endereco||''}" placeholder="Rua, número, bairro"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Cidade</label><input id="ea-cidade" value="${a.cidade||''}" placeholder="Ex: São Paulo"/></div>
+      <div class="field"><label>CEP</label><input id="ea-cep" value="${a.cep||''}" placeholder="00000-000" maxlength="9"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Responsável</label><input id="ea-resp" value="${a.responsavel||''}" placeholder="Nome do responsável"/></div>
+      <div class="field"><label>Tel. Responsável</label><input id="ea-tel-resp" value="${a.telResponsavel||''}" placeholder="(00) 00000-0000" maxlength="15"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>E-mail</label><input id="ea-email" type="email" value="${a.email||''}" placeholder="aluno@email.com"/></div>
+      <div class="field"><label>Data de Nascimento</label><input id="ea-nasc" type="date" value="${a.nascimento||''}"/></div>
+    </div>
+    <div class="field"><label>Observações</label><textarea id="ea-obs" rows="2" style="width:100%;resize:vertical">${a.obs||''}</textarea></div>
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button class="btn" style="flex:1" onclick="salvarEdicaoAlunoReal('${nome.replace(/'/g,"\\'")}')">💾 Salvar</button>
+      <button class="btn-danger" onclick="apagarAluno('${nome.replace(/'/g,"\\'")}');closeModal()">🗑 Apagar</button>
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+    </div>`,620);
 }
 
 function salvarEdicaoAlunoReal(nomeOrig){
-  const a=ALUNOS_REAIS.find(x=>(x.nome||x.name)===nomeOrig);if(!a)return;
+  const a=ALUNOS_REAIS.find(x=>(x.nome||x.name)===nomeOrig); if(!a) return;
   const novoNome=(document.getElementById('ea-nome').value||'').trim();
-  if(!novoNome)return alert('Nome obrigatorio.');
-  a.nome=novoNome;a.name=novoNome;
-  a.instrumento=document.getElementById('ea-instr').value.trim();
-  a.professor=document.getElementById('ea-prof').value.trim();
-  a.valor=Number(document.getElementById('ea-valor').value)||0;
-  salvarDados();closeModal();renderPage();
+  if(!novoNome) return alert('Nome obrigatório.');
+  a.nome        = novoNome; a.name = novoNome;
+  a.cpf         = document.getElementById('ea-cpf').value.trim();
+  a.telefone    = document.getElementById('ea-tel').value.trim();
+  a.instrumento = document.getElementById('ea-instr').value.trim();
+  a.professor   = document.getElementById('ea-prof').value.trim();
+  a.valor       = Number(document.getElementById('ea-valor').value)||0;
+  a.dataInicio  = document.getElementById('ea-inicio').value||'';
+  a.endereco    = document.getElementById('ea-end').value.trim();
+  a.cidade      = document.getElementById('ea-cidade').value.trim();
+  a.cep         = document.getElementById('ea-cep').value.trim();
+  a.responsavel = document.getElementById('ea-resp').value.trim();
+  a.telResponsavel = document.getElementById('ea-tel-resp').value.trim();
+  a.email       = document.getElementById('ea-email').value.trim();
+  a.nascimento  = document.getElementById('ea-nasc').value||'';
+  a.obs         = document.getElementById('ea-obs').value.trim();
+  salvarDados(); closeModal(); renderPage();
   showToast('Aluno atualizado!','green');
 }
 
 function modalNovoAlunoCompleto(){
   const empresa=currentUser.company||currentUser.name||'';
-  openModal('Novo Aluno',
-    '<div class="field"><label>Nome Completo</label><input id="nac-nome" placeholder="Nome do aluno" oninput="gerarLoginPreview()"/></div>'+
-    '<div id="nu-login-preview" style="display:none;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:10px 13px;margin-bottom:14px;font-size:12.5px">'+
-    'Login: <strong id="nu-login-val" style="color:var(--gold)"></strong> Senha: <strong id="nu-senha-val" style="color:var(--gold)"></strong></div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+
-    '<div class="field"><label>Instrumento/Curso</label><input id="nac-instr" placeholder="Ex: Piano"/></div>'+
-    '<div class="field"><label>Professor</label><input id="nac-prof" placeholder="Ex: Camila"/></div></div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+
-    '<div class="field"><label>Mensalidade (R$)</label><input id="nac-valor" type="number" step="0.01" placeholder="0"/></div>'+
-    '<div class="field"><label>CPF (opcional)</label><input id="nac-cpf" placeholder="000.000.000-00"/></div></div>'+
-    '<div style="display:flex;gap:10px;margin-top:4px">'+
-    '<button class="btn" style="flex:1" onclick="salvarNovoAlunoCompleto()">Cadastrar Aluno</button>'+
-    '<button class="btn-ghost" onclick="closeModal()">Cancelar</button></div>',520);
+  openModal('➕ Novo Aluno',
+    `<div class="field"><label>Nome Completo *</label><input id="nac-nome" placeholder="Nome do aluno" oninput="gerarLoginPreview()"/></div>
+    <div id="nu-login-preview" style="display:none;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:10px 13px;margin-bottom:14px;font-size:12.5px">
+      Login: <strong id="nu-login-val" style="color:var(--gold)"></strong> &nbsp; Senha: <strong id="nu-senha-val" style="color:var(--gold)"></strong>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>CPF</label><input id="nac-cpf" placeholder="000.000.000-00" maxlength="14" oninput="this.value=this.value.replace(/\\D/g,'').replace(/(\\d{3})(\\d{3})(\\d{3})(\\d{2})/,'$1.$2.$3-$4')"/></div>
+      <div class="field"><label>Telefone</label><input id="nac-tel" placeholder="(00) 00000-0000" maxlength="15"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Curso / Instrumento *</label><input id="nac-instr" placeholder="Ex: Piano, Violão"/></div>
+      <div class="field"><label>Professor</label><input id="nac-prof" placeholder="Ex: Camila"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Mensalidade (R$)</label><input id="nac-valor" type="number" step="0.01" placeholder="0,00"/></div>
+      <div class="field"><label>Data de Início</label><input id="nac-inicio" type="date"/></div>
+    </div>
+    <div class="field"><label>Endereço</label><input id="nac-end" placeholder="Rua, número, bairro"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Cidade</label><input id="nac-cidade" placeholder="Ex: São Paulo"/></div>
+      <div class="field"><label>CEP</label><input id="nac-cep" placeholder="00000-000" maxlength="9" oninput="this.value=this.value.replace(/\\D/g,'').replace(/(\\d{5})(\\d{3})/,'$1-$2')"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>Responsável (se menor)</label><input id="nac-resp" placeholder="Nome do responsável"/></div>
+      <div class="field"><label>Tel. Responsável</label><input id="nac-tel-resp" placeholder="(00) 00000-0000" maxlength="15"/></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label>E-mail</label><input id="nac-email" type="email" placeholder="aluno@email.com"/></div>
+      <div class="field"><label>Data de Nascimento</label><input id="nac-nasc" type="date"/></div>
+    </div>
+    <div class="field"><label>Observações</label><textarea id="nac-obs" placeholder="Informações extras..." rows="2" style="width:100%;resize:vertical"></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button class="btn" style="flex:1" onclick="salvarNovoAlunoCompleto()">✅ Cadastrar Aluno</button>
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+    </div>`,600);
 }
 
 function salvarNovoAlunoCompleto(){
   const nome=(document.getElementById('nac-nome').value||'').trim();
-  if(!nome)return alert('Informe o nome.');
+  if(!nome) return alert('Informe o nome do aluno.');
   const instr=(document.getElementById('nac-instr').value||'').trim();
-  const prof=(document.getElementById('nac-prof').value||'').trim();
-  const valor=Number(document.getElementById('nac-valor').value)||0;
-  const cpf=(document.getElementById('nac-cpf').value||'').trim();
+  if(!instr) return alert('Informe o curso/instrumento.');
   const empresa=currentUser.company||currentUser.name||'';
-  ALUNOS_REAIS.push({id:Date.now(),nome,name:nome,instrumento:instr,professor:prof,valor,cpf,active:true});
-  const loginAuto=gerarLoginDono(nome);
+  const aluno = {
+    id: Date.now(),
+    nome, name: nome,
+    cpf:          (document.getElementById('nac-cpf').value||'').trim(),
+    telefone:     (document.getElementById('nac-tel').value||'').trim(),
+    instrumento:  instr,
+    professor:    (document.getElementById('nac-prof').value||'').trim(),
+    valor:        Number(document.getElementById('nac-valor').value)||0,
+    dataInicio:   document.getElementById('nac-inicio').value||'',
+    endereco:     (document.getElementById('nac-end').value||'').trim(),
+    cidade:       (document.getElementById('nac-cidade').value||'').trim(),
+    cep:          (document.getElementById('nac-cep').value||'').trim(),
+    responsavel:  (document.getElementById('nac-resp').value||'').trim(),
+    telResponsavel:(document.getElementById('nac-tel-resp').value||'').trim(),
+    email:        (document.getElementById('nac-email').value||'').trim(),
+    nascimento:   document.getElementById('nac-nasc').value||'',
+    obs:          (document.getElementById('nac-obs').value||'').trim(),
+    active: true,
+    empresa_id: currentUser.empresa_id||''
+  };
+  ALUNOS_REAIS.push(aluno);
+  const loginAuto = gerarLoginDono(nome);
   if(!USERS.find(x=>x.email===loginAuto&&x.company===empresa)){
     const av=nome.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
     USERS.push({id:Date.now()+1,name:nome,email:loginAuto,pass:loginAuto,role:'aluno',active:true,av,company:empresa,empresa_id:currentUser.empresa_id,turma:instr,loginGerado:true,senhaInicial:loginAuto,primeiroAcesso:true});
     salvarUsuarios();
   }
-  salvarDados();closeModal();renderPage();
+  salvarDados(); closeModal(); renderPage();
   showToast('Aluno '+nome+' cadastrado! Login: '+loginAuto,'green');
 }
 
@@ -4081,8 +4275,15 @@ function pgBoletos(){
   </div>`+
   (listaFiltrada.length===0
     ?`<div class="empty-state"><div class="empty-icon">💳</div><div class="empty-text">Nenhum boleto ${filtro!=='todos'?'com este status':''}</div></div>`
-    :cardWrap(`${listaFiltrada.length} boleto(s)`,'',listaFiltrada.map(b=>`<div class="card-row"><div style="display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;border-radius:10px;background:${b.status==='pago'?'rgba(16,185,129,.12)':b.status==='vencido'?'rgba(239,68,68,.12)':'rgba(245,158,11,.12)'};display:flex;align-items:center;justify-content:center;font-size:20px">${b.status==='pago'?'✅':b.status==='vencido'?'⚠️':'💳'}</div><div><div class="row-main">${isAluno?b.mes:b.aluno+' — '+b.mes}</div><div class="row-sub">Vencimento: ${b.venc}${b.pagoEm?' · Pago em: '+b.pagoEm:''}</div></div></div><div class="row-right"><span style="font-weight:700;color:var(--text)">R$ ${b.valor.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>${bdg(b.status==='pago'?'Pago':b.status==='vencido'?'Vencido':'Em Aberto',b.status==='pago'?'green':b.status==='vencido'?'red':'warn')}${b.status!=='pago'?(isAluno?`<button class="btn btn-sm" onclick="abrirPagamentoAluno('${b.id}','${b.mes}',${b.valor})">💳 Pagar</button>`:`<button class="btn btn-sm" onclick="darBaixa('${b.id}')">✅ Dar Baixa</button>`):''}
-          <button class="btn-ghost" style="font-size:11px" onclick="imprimirBoleto(${b.id})">🖨️</button>${!isAluno&&b.status!=='pago'?`<button class="btn-ghost" style="font-size:11px" onclick="modalWhatsAppBoleto('${b.aluno}',${b.valor},'${b.mes}')">📱</button>`:''}${!isAluno?`<button class="btn-danger" style="font-size:11px" onclick="excluirBoleto(${b.id})">🗑</button>`:''}  </div></div>`).join('')));
+    :cardWrap(`${listaFiltrada.length} boleto(s)`,'',listaFiltrada.map(b=>{
+      const temAjuste=b.status==='pago'&&b.valorOriginal&&b.ajuste&&b.ajuste!==0;
+      const ajusteLabel=temAjuste?(b.ajuste>0
+        ?`<span style="font-size:11px;color:var(--red);margin-left:4px">+R$ ${b.ajuste.toFixed(2).replace('.',',')} juros</span>`
+        :`<span style="font-size:11px;color:var(--green);margin-left:4px">-R$ ${Math.abs(b.ajuste).toFixed(2).replace('.',',')} desconto</span>`):'';
+      const valorOrigLabel=temAjuste?`<div style="font-size:11px;color:var(--muted)">Original: R$ ${b.valorOriginal.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>`:'';
+      return`<div class="card-row"><div style="display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;border-radius:10px;background:${b.status==='pago'?'rgba(16,185,129,.12)':b.status==='vencido'?'rgba(239,68,68,.12)':'rgba(245,158,11,.12)'};display:flex;align-items:center;justify-content:center;font-size:20px">${b.status==='pago'?'✅':b.status==='vencido'?'⚠️':'💳'}</div><div><div class="row-main">${isAluno?b.mes:b.aluno+' — '+b.mes}</div><div class="row-sub">Vencimento: ${b.venc}${b.pagoEm?' · Pago em: '+b.pagoEm:''}${b.obs?' · '+b.obs:''}</div>${valorOrigLabel}</div></div><div class="row-right"><span style="font-weight:700;color:var(--text)">R$ ${(b.valorPago||b.valor).toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>${ajusteLabel}${bdg(b.status==='pago'?'Pago':b.status==='vencido'?'Vencido':'Em Aberto',b.status==='pago'?'green':b.status==='vencido'?'red':'warn')}${b.status!=='pago'?(isAluno?`<button class="btn btn-sm" onclick="abrirPagamentoAluno('${b.id}','${b.mes}',${b.valor})">💳 Pagar</button>`:`<button class="btn btn-sm" onclick="darBaixa('${b.id}')">✅ Dar Baixa</button>`):''}
+          <button class="btn-ghost" style="font-size:11px" onclick="imprimirBoleto(${b.id})">🖨️</button>${!isAluno&&b.status!=='pago'?`<button class="btn-ghost" style="font-size:11px" onclick="modalWhatsAppBoleto('${b.aluno}',${b.valor},'${b.mes}')">📱</button>`:''}${!isAluno?`<button class="btn-danger" style="font-size:11px" onclick="excluirBoleto(${b.id})">🗑</button>`:''}</div></div>`;
+    }).join('')));
 }
 
 function imprimirBoleto(id){
@@ -4286,22 +4487,169 @@ function gerarBoletosAnoTodo(){
 
 function darBaixa(id){
   const b=BOLETOS.find(b=>String(b.id)===String(id));
-  if(!b){ showToast('Boleto nao encontrado.','red'); return; }
-  if(!confirm('Confirmar pagamento de R$ '+b.valor.toLocaleString('pt-BR')+' de '+b.aluno+' ('+b.mes+')?'))return;
+  if(!b){ showToast('Boleto não encontrado.','red'); return; }
+
   const hoje=new Date().toISOString().slice(0,10);
-  b.status='pago'; b.pagoEm=hoje;
-  // Lança automaticamente em transacoes como entrada paga
+  const valorOriginal=b.valorOriginal||b.valor;
+
+  // Calcula dias de atraso ou antecipação
+  let diasDiff=0; let tipoAjuste='em_dia';
+  if(b.venc){
+    const venc=new Date(b.venc+'T00:00:00');
+    const hj=new Date(hoje+'T00:00:00');
+    diasDiff=Math.round((hj-venc)/(1000*60*60*24));
+    if(diasDiff>0) tipoAjuste='atraso';
+    else if(diasDiff<0) tipoAjuste='antecipado';
+  }
+
+  // Sugestão automática de juros/desconto (editável)
+  const JUROS_DIA=0.33; // 0,33% ao dia (10%/mês)
+  const DESCONTO_DIA=0.17; // 0,17% ao dia (~5%/mês)
+  let valorSugerido=valorOriginal;
+  let ajusteSugerido=0; let labelAjuste='';
+  if(tipoAjuste==='atraso'){
+    ajusteSugerido=parseFloat((valorOriginal*(JUROS_DIA/100)*diasDiff).toFixed(2));
+    valorSugerido=parseFloat((valorOriginal+ajusteSugerido).toFixed(2));
+    labelAjuste=`Juros sugeridos (${diasDiff} dia(s) de atraso @ ${JUROS_DIA}%/dia): +R$ ${ajusteSugerido.toFixed(2).replace('.',',')}`;
+  } else if(tipoAjuste==='antecipado'){
+    ajusteSugerido=parseFloat((valorOriginal*(DESCONTO_DIA/100)*Math.abs(diasDiff)).toFixed(2));
+    valorSugerido=parseFloat((valorOriginal-ajusteSugerido).toFixed(2));
+    labelAjuste=`Desconto sugerido (${Math.abs(diasDiff)} dia(s) antecipado @ ${DESCONTO_DIA}%/dia): -R$ ${ajusteSugerido.toFixed(2).replace('.',',')}`;
+  }
+
+  const corStatus=tipoAjuste==='atraso'?'var(--red)':tipoAjuste==='antecipado'?'var(--green)':'var(--gold)';
+  const labelStatus=tipoAjuste==='atraso'?`⚠️ ${diasDiff} dia(s) de atraso`:tipoAjuste==='antecipado'?`✅ ${Math.abs(diasDiff)} dia(s) antecipado`:'✅ Pagamento no prazo';
+
+  openModal('✅ Dar Baixa — '+b.aluno,`
+    <div style="background:var(--input);border-radius:12px;padding:14px 16px;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="font-size:12px;color:var(--muted)">Competência</span>
+        <span style="font-size:13px;font-weight:700;color:var(--text)">${b.mes}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="font-size:12px;color:var(--muted)">Vencimento</span>
+        <span style="font-size:13px;color:var(--text)">${b.venc||'—'}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="font-size:12px;color:var(--muted)">Valor original</span>
+        <span style="font-size:13px;font-weight:700;color:var(--text)">R$ ${valorOriginal.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between">
+        <span style="font-size:12px;color:var(--muted)">Situação</span>
+        <span style="font-size:12.5px;font-weight:700;color:${corStatus}">${labelStatus}</span>
+      </div>
+    </div>
+
+    ${tipoAjuste!=='em_dia'?`
+    <div style="padding:10px 14px;border-radius:10px;margin-bottom:14px;font-size:12.5px;
+      background:${tipoAjuste==='atraso'?'rgba(239,68,68,.08)':'rgba(16,185,129,.08)'};
+      border:1px solid ${tipoAjuste==='atraso'?'rgba(239,68,68,.25)':'rgba(16,185,129,.25)'};
+      color:${tipoAjuste==='atraso'?'var(--red)':'var(--green)'}">
+      💡 ${labelAjuste}
+    </div>`:''}
+
+    <div class="field">
+      <label>Data do Pagamento</label>
+      <input id="db-data" type="date" value="${hoje}"/>
+    </div>
+    <div class="field">
+      <label>Valor Recebido (R$) <span style="font-size:11px;color:var(--muted);font-weight:400">— edite se houve juros ou desconto</span></label>
+      <input id="db-valor" type="number" step="0.01" value="${valorSugerido.toFixed(2)}"
+        oninput="calcDiferenca(${valorOriginal})"/>
+    </div>
+
+    <div id="db-diff-box" style="display:flex;justify-content:space-between;align-items:center;
+      padding:10px 14px;border-radius:10px;margin-bottom:14px;font-size:13px;
+      background:var(--input);border:1px solid var(--border)">
+      <span style="color:var(--muted)">Diferença em relação ao original:</span>
+      <span id="db-diff-val" style="font-weight:700"></span>
+    </div>
+
+    <div class="field">
+      <label>Observação <span style="font-size:11px;color:var(--muted);font-weight:400">— opcional</span></label>
+      <input id="db-obs" placeholder="Ex: Pago com desconto de antecipação, Pago com juros de atraso..."/>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn" style="flex:1" onclick="confirmarBaixa('${id}',${valorOriginal})">✅ Confirmar Pagamento</button>
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+    </div>
+  `);
+
+  // Calcula diferença ao abrir
+  setTimeout(()=>calcDiferenca(valorOriginal),50);
+}
+
+function calcDiferenca(valorOriginal){
+  const input=document.getElementById('db-valor');
+  const box=document.getElementById('db-diff-val');
+  if(!input||!box) return;
+  const valorPago=parseFloat(input.value)||0;
+  const diff=parseFloat((valorPago-valorOriginal).toFixed(2));
+  if(diff===0){
+    box.textContent='Sem diferença';
+    box.style.color='var(--muted)';
+  } else if(diff>0){
+    box.textContent='+R$ '+diff.toFixed(2).replace('.',',') +' (juros/acréscimo)';
+    box.style.color='var(--red)';
+  } else {
+    box.textContent='-R$ '+Math.abs(diff).toFixed(2).replace('.',',') +' (desconto)';
+    box.style.color='var(--green)';
+  }
+}
+
+function confirmarBaixa(id, valorOriginal){
+  const b=BOLETOS.find(b=>String(b.id)===String(id));
+  if(!b) return;
+  const valorPago=parseFloat(document.getElementById('db-valor')?.value)||b.valor;
+  const dataPag=document.getElementById('db-data')?.value||new Date().toISOString().slice(0,10);
+  const obs=(document.getElementById('db-obs')?.value||'').trim();
+  if(valorPago<=0){ showToast('Informe um valor válido.','red'); return; }
+
+  const diff=parseFloat((valorPago-valorOriginal).toFixed(2));
+  const tipoAjuste=diff>0?'juros':diff<0?'desconto':'em_dia';
+
+  b.status='pago';
+  b.pagoEm=dataPag;
+  b.valorOriginal=valorOriginal;  // guarda o valor base
+  b.valorPago=valorPago;          // guarda o valor efetivamente recebido
+  b.ajuste=diff;                  // diferença (positivo=juros, negativo=desconto)
+  b.tipoAjuste=tipoAjuste;
+  b.obs=obs;
+  b.valor=valorPago;              // atualiza para refletir o que foi recebido
+
+  // Lança em transações com valor real pago
   const jaExiste=TRANSACOES.find(t=>t._boletoId&&String(t._boletoId)===String(id));
   if(!jaExiste){
+    const descricao='Mensalidade '+b.aluno+' — '+b.mes+(obs?' ('+obs+')':'')
+      +(tipoAjuste==='juros'?' [+juros R$ '+diff.toFixed(2)+']':tipoAjuste==='desconto'?' [-desconto R$ '+Math.abs(diff).toFixed(2)+']':'');
     TRANSACOES.push({
       id:'b'+Date.now(),
-      desc:'Mensalidade '+b.aluno+' — '+b.mes,
-      valor:b.valor, tipo:'entrada', cat:'Mensalidades',
-      status:'pago', data:hoje, _boletoId:id
+      desc:descricao,
+      valor:valorPago,
+      valorOriginal:valorOriginal,
+      ajuste:diff,
+      tipoAjuste,
+      tipo:'entrada', cat:'Mensalidades',
+      status:'pago', data:dataPag, _boletoId:id
     });
+  } else {
+    // Atualiza transação existente
+    jaExiste.valor=valorPago;
+    jaExiste.valorOriginal=valorOriginal;
+    jaExiste.ajuste=diff;
+    jaExiste.tipoAjuste=tipoAjuste;
+    jaExiste.data=dataPag;
   }
+
+  closeModal();
   salvarDados();
-  showToast('Boleto baixado! Lancamento registrado em Financeiro.','green');
+  const msg=tipoAjuste==='juros'
+    ?`Baixa registrada com juros de R$ ${diff.toFixed(2)} (+${((diff/valorOriginal)*100).toFixed(1)}%)`
+    :tipoAjuste==='desconto'
+    ?`Baixa registrada com desconto de R$ ${Math.abs(diff).toFixed(2)} (-${((Math.abs(diff)/valorOriginal)*100).toFixed(1)}%)`
+    :'Boleto baixado! Pagamento no valor exato.';
+  showToast(msg,'green');
   renderPage();
 }
 
@@ -8734,11 +9082,16 @@ function pgFichaAlunoDetalhe(nome){
   const totalAberto = abertos.reduce((a,b)=>a+Number(b.valor||0),0);
   const presAl = PRESENCA.filter(p=>p.aluno===nome);
   const avasAl = AVALIACOES.filter(av=>av.aluno===nome);
+  const campo=(ic,lb,vl)=>vl?`<div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
+    <div style="font-size:11px;color:var(--muted);margin-bottom:4px">${ic} ${lb}</div>
+    <div style="font-weight:600;color:var(--text);font-size:13px">${vl}</div>
+  </div>`:'';
 
-  return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+  return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
     <button class="btn-ghost" onclick="fichaAlunoSel=null;renderPage()">← Voltar</button>
     <div style="font-size:18px;font-weight:700;color:var(--text);font-family:'Playfair Display',serif">📋 ${nome}</div>
-    ${bdg(a.active!==false?'Ativo':'Bloqueado',a.active!==false?'green':'red')}
+    ${bdg(a.active!==false?'Ativo':'Inativo',a.active!==false?'green':'red')}
+    <button class="btn btn-sm" onclick="editarAlunoReal('${nome.replace(/'/g,"\\'")}')">✏️ Editar</button>
   </div>`+
   `<div class="kgrid">
     ${kc('💰','Mensalidade','R$ '+(a.valor||0).toFixed(2),'green')}
@@ -8747,19 +9100,31 @@ function pgFichaAlunoDetalhe(nome){
     ${kc('📊','Total Pago','R$ '+totalPago.toLocaleString('pt-BR',{minimumFractionDigits:2}),'blue')}
   </div>`+
   `<div class="card" style="margin-bottom:14px">
-    <div class="card-header"><span class="card-title">Dados do Aluno</span>
-      <button class="btn btn-sm" onclick="editarAlunoReal('${nome}')">✏️ Editar</button>
+    <div class="card-header"><span class="card-title">📄 Dados do Aluno</span></div>
+    <div style="padding:16px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">
+      ${campo('🎵','Curso / Instrumento',a.instrumento||'—')}
+      ${campo('👨‍🏫','Professor',a.professor||'—')}
+      ${campo('💳','CPF',a.cpf||'—')}
+      ${campo('📱','Telefone',a.telefone||'—')}
+      ${campo('🎂','Nascimento',a.nascimento?new Date(a.nascimento+'T12:00:00').toLocaleDateString('pt-BR'):'—')}
+      ${campo('📅','Início',a.dataInicio?new Date(a.dataInicio+'T12:00:00').toLocaleDateString('pt-BR'):'—')}
+      ${campo('📧','E-mail',a.email||'—')}
+      ${campo('🏠','Endereço',a.endereco||'—')}
+      ${campo('🏙','Cidade',a.cidade||'—')}
+      ${campo('📮','CEP',a.cep||'—')}
+      ${campo('👤','Responsável',a.responsavel||'—')}
+      ${campo('📞','Tel. Responsável',a.telResponsavel||'—')}
     </div>
-    <div style="padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      ${[['🎵','Instrumento/Curso',a.instrumento||'—'],['👨‍🏫','Professor',a.professor||'—'],['💳','CPF',a.cpf||'—'],['📱','Nascimento',a.nascimento||'—']].map(([ic,lb,vl])=>`
-        <div style="background:var(--surface2);border-radius:10px;padding:12px 14px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">${ic} ${lb}</div>
-          <div style="font-weight:600;color:var(--text);font-size:13px">${vl}</div>
-        </div>`).join('')}
-    </div>
+    ${a.obs?`<div style="padding:0 18px 16px"><div style="background:var(--surface2);border-radius:10px;padding:12px 14px"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">📝 Observações</div><div style="font-size:13px;color:var(--text);line-height:1.6">${a.obs}</div></div></div>`:''}
+    ${a.telefone?`<div style="padding:0 18px 16px">
+      <a href="https://wa.me/55${a.telefone.replace(/\D/g,'')}" target="_blank" class="btn-ghost" style="display:inline-flex;align-items:center;gap:6px;font-size:12px">
+        📱 WhatsApp do Aluno
+      </a>
+      ${a.telResponsavel?`<a href="https://wa.me/55${a.telResponsavel.replace(/\D/g,'')}" target="_blank" class="btn-ghost" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;margin-left:8px">📱 WhatsApp do Responsável</a>`:''}
+    </div>`:''}
   </div>`+
   (boletosAluno.length>0?`<div class="card" style="margin-bottom:14px">
-    <div class="card-header"><span class="card-title">Histórico de Boletos</span></div>
+    <div class="card-header"><span class="card-title">💳 Histórico de Boletos</span></div>
     ${boletosAluno.slice(0,8).map(b=>`<div class="card-row">
       <div><div class="row-main">Ref: ${b.referencia||'—'}</div><div class="row-sub">Venc: ${b.vencimento||'—'}</div></div>
       <div class="row-right">${bdg(b.status==='pago'?'Pago':'Em Aberto',b.status==='pago'?'green':'warn')}
@@ -9584,25 +9949,60 @@ self.addEventListener('fetch',e=>{
   navigator.serviceWorker.register(swUrl).catch(()=>{});
 }
 
-// Botão instalar app
+// ═══ PWA INSTALL ═══
 let deferredPrompt=null;
+
+function _pwaShowBanner(){
+  const banner=document.getElementById('pwa-banner');
+  const btn=document.getElementById('pwa-install-btn');
+  if(banner) banner.style.display='block';
+  if(btn) btn.style.display='flex';
+}
+function _pwaHideBanner(){
+  const banner=document.getElementById('pwa-banner');
+  const btn=document.getElementById('pwa-install-btn');
+  if(banner) banner.style.display='none';
+  if(btn) btn.style.display='none';
+}
+
+// Android / Chrome / Edge — prompt nativo
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();
   deferredPrompt=e;
-  // Mostra botão instalar na barra superior se existir
-  const btn=document.getElementById('pwa-install-btn');
-  if(btn) btn.style.display='flex';
+  _pwaShowBanner();
 });
+
 window.addEventListener('appinstalled',()=>{
   deferredPrompt=null;
-  const btn=document.getElementById('pwa-install-btn');
-  if(btn) btn.style.display='none';
+  _pwaHideBanner();
   showToast('✅ App instalado com sucesso!','green');
 });
+
+// iOS Safari — sem prompt nativo, mostra instrução manual
+const isIos=(/iphone|ipad|ipod/i.test(navigator.userAgent));
+const isInStandalone=('standalone' in navigator && navigator.standalone);
+if(isIos && !isInStandalone){
+  const hint=document.getElementById('pwa-ios-hint');
+  if(hint) hint.style.display='block';
+}
+
+// Já instalado como PWA? Esconde tudo
+if(window.matchMedia('(display-mode: standalone)').matches || isInStandalone){
+  _pwaHideBanner();
+  const hint=document.getElementById('pwa-ios-hint');
+  if(hint) hint.style.display='none';
+}
+
 function instalarPWA(){
-  if(!deferredPrompt){ showToast('Use o Chrome e acesse pelo link para instalar','warn'); return; }
+  if(!deferredPrompt){
+    showToast('Use o Chrome no Android/PC para instalar. No iPhone: Compartilhar → Adicionar à Tela de Início','warn');
+    return;
+  }
   deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; });
+  deferredPrompt.userChoice.then(choice=>{
+    if(choice.outcome==='accepted') showToast('Instalando app...','green');
+    deferredPrompt=null;
+  });
 }
 </script>
 </body>
