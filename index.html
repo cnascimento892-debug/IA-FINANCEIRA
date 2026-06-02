@@ -6393,7 +6393,7 @@ function pgProfessores(){
     ${isEscola?`<button class="btn btn-sm" onclick="profDetalheNome='${pu.name}';renderPage()">👁 Ver Detalhes</button>`:''}
     <button class="${pu.active?'btn-danger':'btn-success'}" style="font-size:11px" onclick="toggleUsuarioEmpresa(${pu.id})">${pu.active?'🔒 Bloquear':'🔓 Ativar'}</button>
     <button class="btn-ghost" style="font-size:11px" onclick="editarUsuarioEmpresa(${pu.id})">✏️</button>
-    <button class="btn-danger" style="font-size:11px" onclick="if(confirm('Remover professor?')){USERS=USERS.filter(x=>x.id!==${pu.id});salvarUsuarios();renderPage();}">🗑</button>
+    <button class="btn-danger" style="font-size:11px" onclick="if(confirm('Remover professor?')){USERS=USERS.filter(x=>x.id!==${pu.id});EMPRESA_USERS=EMPRESA_USERS.filter(x=>x.id!==${pu.id});salvarUsuarios();renderPage();showToast('Professor removido.','warn');}">🗑</button>
     </div></div>`).join('')
   ):'');
 }
@@ -7159,26 +7159,41 @@ async function salvarNovoUsuarioEmpresa(){
 
 function editarUsuarioEmpresa(id){
   const eu=[...USERS,...EMPRESA_USERS].find(x=>String(x.id)===String(id)); if(!eu) return;
-  openModal(`Editar — ${eu.name}`,`
-    <div class="field"><label>Nome</label><input id="eu-nome" value="${eu.name}"/></div>
-    <div class="field"><label>E-mail</label><input id="eu-email" type="email" value="${eu.email}"/></div>
-    <div class="field"><label>Nova Senha (deixe em branco para manter)</label><input id="eu-pass" type="password" placeholder="Nova senha"/></div>
-    <div style="display:flex;gap:10px;margin-top:4px">
-      <button class="btn" style="flex:1" onclick="salvarEdicaoUsuarioEmpresa(${id})">✅ Salvar</button>
-      <button class="btn-danger" onclick="if(confirm('Remover usuário?')){USERS=USERS.filter(x=>x.id!==${id});EMPRESA_USERS=EMPRESA_USERS.filter(x=>x.id!==${id});closeModal();renderPage();}">🗑 Remover</button>
+  const isProf=eu.role==='professor';
+  openModal(`✏️ Editar — ${eu.name}`,`
+    <div class="field"><label>Nome Completo</label><input id="eu-nome" value="${eu.name||''}"/></div>
+    <div class="field"><label>E-mail / Login</label><input id="eu-email" type="email" value="${eu.email||''}"/></div>
+    ${isProf?`<div class="field"><label>Instrumento / Matéria</label><input id="eu-materia" value="${eu.materia||eu.turma||''}"/></div>`:''}
+    <div class="field"><label>Nova Senha <span style="color:var(--muted);font-size:11px">(deixe em branco para manter)</span></label><input id="eu-pass" type="password" placeholder="Mínimo 4 caracteres"/></div>
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button class="btn" style="flex:1" onclick="salvarEdicaoUsuarioEmpresa('${id}')">💾 Salvar</button>
+      <button class="btn-danger" onclick="if(confirm('Remover este ${isProf?'professor':'usuário'}?')){USERS=USERS.filter(x=>String(x.id)!=='${id}');EMPRESA_USERS=EMPRESA_USERS.filter(x=>String(x.id)!=='${id}');salvarUsuarios();closeModal();renderPage();showToast('Removido.','warn');}">🗑 Remover</button>
       <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
-    </div>`,440);
+    </div>`,460);
 }
 
 function salvarEdicaoUsuarioEmpresa(id){
-  const eu=USERS.find(x=>String(x.id)===String(id))||EMPRESA_USERS.find(x=>String(x.id)===String(id)); if(!eu) return;
+  // Busca em USERS e EMPRESA_USERS pelo id como string
+  const uIdx=USERS.findIndex(x=>String(x.id)===String(id));
+  const eIdx=EMPRESA_USERS.findIndex(x=>String(x.id)===String(id));
+  if(uIdx===-1&&eIdx===-1){ alert('Usuário não encontrado.'); return; }
   const nome=(document.getElementById('eu-nome').value||'').trim();
   const email=(document.getElementById('eu-email').value||'').trim();
   const pass=(document.getElementById('eu-pass').value||'').trim();
-  if(!nome||!email)return alert('Nome e e-mail obrigatórios.');
-  // Update in both arrays
-  [USERS,EMPRESA_USERS].forEach(arr=>{const x=arr.find(u=>u.id===id);if(x){x.name=nome;x.email=email;x.av=nome.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();if(pass.length>=6)x.pass=pass;}});
+  const materiaEl=document.getElementById('eu-materia');
+  const materia=materiaEl?(materiaEl.value||'').trim():'';
+  if(!nome||!email){ alert('Nome e e-mail são obrigatórios.'); return; }
+  const av=nome.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+  // Atualiza nos dois arrays
+  [uIdx>-1?USERS[uIdx]:null, eIdx>-1?EMPRESA_USERS[eIdx]:null].forEach(u=>{
+    if(!u) return;
+    u.name=nome; u.email=email; u.av=av;
+    if(materia) u.materia=materia;
+    if(pass.length>=4) u.pass=pass;
+  });
+  salvarUsuarios(); // ← PERSISTIR no localStorage
   closeModal(); renderPage();
+  showToast('✅ '+nome+' atualizado!','green');
 }
 
 function modalImportarAlunosPlanilha(){
